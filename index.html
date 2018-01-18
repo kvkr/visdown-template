@@ -1,53 +1,53 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Visdown - Markdown for Visualisation</title>
-  <meta name="description" content="Create Simple Visualisation Charts with Markdown">
-
-  <script src="lib/vega.min.js"></script>
-  <script src="lib/vega-lite.min.js"></script>
-  <script src="lib/vega-embed.min.js"></script>
-  <script src="lib/marked.min.js"></script>
-  <script src="lib/yaml.min.js"></script>
-
-  <style>
-    #visdown-output {max-width: 800px; margin: 0 auto;}
-    #visdown-input {display: none;}
-  </style>
+  <title>Embedding Vega-Lite</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vega/3.0.8/vega.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vega-lite/2.0.4/vega-lite.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vega-embed/3.0.0-rc7/vega-embed.js"></script>
 </head>
 <body>
 
-<div id="visdown-input">
+  <div id="vis"></div>
 
-# Kavitha
-
-This is a vis on cars.
-
-```vis
-data:
-  url: data/cars.csv
-mark: point
-encoding:
-  x:
-    field: kmpl
-    type: Q
-  y:
-    field: price
-    type: Q
-  color:
-    field: type
-    type: N
-  size:
-    field: bhp
-    type: Q
-```
-
-</div>
-<div id="visdown-output"></div>
-<script src="visdown.js"></script>
-
+  <script type="text/javascript">
+    var yourVlSpec = {
+  "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
+  "description": "A simple bar chart with embedded data.",
+  "height": 400,
+  "width": 400,
+  "data": {
+    "url": "https://raw.githubusercontent.com/amitkaps/visdown/master/data/notes.csv"
+  },
+ "layer":[
+     {"mark": "bar",
+  "encoding": {
+    "x": {
+      "field": "year",
+      "type": "ordinal"},
+    "y": {
+        "field": "money",
+        "type": "quantitative",
+        "size": {
+          "field": "number",
+          "type": "ordinal"},
+          "stack":  "normalize"},
+    "color": {
+      "field": "denom",
+      "type": "nominal",
+      "scale": {"scheme": "category20c"}}
+}
+     },
+  { "mark": "circle",
+        "encoding": {
+        "x": {"field": "year", "type": "ordinal"},
+        "y": {"field": "denom", "type": "ordinal"}, "size": {"field": "number", "type": "quantitative" },
+        "color": {"value": "brown"}
+  }
+  }
+ ]
+}
+    vegaEmbed("#vis", yourVlSpec);
+  </script>
 </body>
 </html>
